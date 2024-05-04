@@ -1,38 +1,36 @@
-.App {
-  text-align: center;
+@import url(./assets/transfonter.org-20240504-165003/stylesheet.css);
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body{
+  font-family: 'Simplon Norm';
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+:root{
+  --secondary-color:#888792;
+  --black:#000000;
+  --white:#FFFFFF;
+  
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ul,li{
+  list-style: none;
 }
-
-.App-link {
-  color: #61dafb;
+a{
+  text-decoration: none;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navbar-section{
+  border-bottom: 1px solid #E5E5E5;
+}
+.text-secondary-color{
+  color: var(--secondary-color);
+}
+.heart-icon:hover path {
+  fill: #EB4C6B; 
+  stroke: #EB4C6B;
+}
+.footer-section{
+  background-color: var(--black);
+  padding: 50px 0;
+  color: var(--white);
 }
