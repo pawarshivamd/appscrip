@@ -34,3 +34,64 @@ a{
   padding: 50px 0;
   color: var(--white);
 }
+.form-control{
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  /* flex-wrap: wrap; */
+}
+.input-text{
+  padding: 15px;
+  flex: 1;
+}
+.btn-sub{
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;  
+  padding: 15px 50px ;
+  border-radius: 5px;
+  border: 1.14px solid #FFFFFF !important;
+  opacity: 0.3 ;
+  color: #FFFFFF;
+  background-color: transparent;
+}
+.icon-box{
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--white);
+}
+.bar-icon{
+  display: none;
+}
+@media (max-width:991px) {
+  
+  .bar-icon{
+    display: block;
+  }
+  .navbar-menu{
+    display: none !important;
+  }
+  .navbar-menu.open {
+    position: absolute;
+    background-color: var(--white);
+    display: block !important;
+    width: 100%;
+    left: 0;
+    right: 0;
+    z-index: 11;
+    & li{
+      padding: 20px 20px;
+    }
+  }
+}
+@media (max-width:600px){
+  .form-control{
+    gap: 1rem;
+  }
+  .btn-sub{
+    padding: 15px 15px ;
+  }
+}

@@ -1,10 +1,13 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography, useMediaQuery } from "@mui/material";
 import { ReactComponent as LeftArrowIcon } from "../assets/img/icon/arrow-left.svg";
-// import { ReactComponent as RightArrowIcon } from "../assets/img/icon/arrow-right.svg";
+import { ReactComponent as RightArrowIcon } from "../assets/img/icon/arrow-right.svg";
 import { ReactComponent as DownArrowIcon } from "../assets/img/icon/arrow-down.svg";
 import imgBag from "../assets/img/products/Front Pic.png";
 import ProductCard from "../components/productCard/ProductCard";
 import Footer from "../components/Footer/Footer";
+import AsiderSection from "../components/Asidebar/AsiderSection";
+import { useState } from "react";
+import { useTheme } from "@emotion/react";
 const products = [
   {
     id: 1,
@@ -36,15 +39,28 @@ const products = [
   },
 ];
 const Home = () => {
+
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down('xs'));
+  const [showFilter, setShowFilter] = useState(!isXs);
+  const [gridItemSize, setGridItemSize] = useState(showFilter ? 3 : 12);
+  const transitionDuration = 600;
+  const handleHideFilter = () => {
+    setShowFilter(!showFilter);
+    setGridItemSize(showFilter ? 12 : 3);
+    setTimeout(() => {
+      setGridItemSize(showFilter ? 12 : 3);
+    }, transitionDuration);
+  };
   return (
     <>
       <Container sx={{ textAlign: "center", py: 6 }}>
-        <Typography variant="h2" gutterBottom sx={{ fontWeight: 400 }}>
+        <Typography variant="h2"  gutterBottom sx={{ fontWeight: 400 , fontSize:{ md:"3.75rem" , xs:"1.24rem"} }}>
           DISCOVER OUR PRODUCTS
         </Typography>
-        <Typography sx={{ fontSize: "1.375rem", fontWeight: 400 }}>
+        <Typography sx={{ fontSize:  {md:"1.375rem", xs:"1rem"} , fontWeight: 400 , mx:"auto" , width:{md:"60%" ,xs:"100%"} }} lg={7}>
           Lorem ipsum dolor sit amet consectetur. Amet est posuere rhoncus{" "}
-          <br />
+        
           scelerisque. Dolor integer scelerisque nibh amet mi ut elementum
           dolor.
         </Typography>
@@ -65,31 +81,36 @@ const Home = () => {
           <Grid
             item
             xl={3}
+            md={4}
+            sm={4}
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
             }}
           >
-            <Typography sx={{ fontWeight: 700 }}>3425 Items</Typography>
+            <Typography  sx={{ fontWeight: 700, display:{md:"block", xs:"none"} }}>3425 Items</Typography>
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                gap: "1rem",
+                gap: "0.5rem",
               }}
             >
-              <LeftArrowIcon />
+              {showFilter ? <LeftArrowIcon /> : <RightArrowIcon />}
+
               <Typography
+                onClick={handleHideFilter}
                 sx={{
                   fontSize: "16px",
                   color: "#888792",
                   textDecoration: "underline",
-                  textTransform: "capitalize",
+                  textTransform: "uppercase",
+                  cursor: "pointer",
                 }}
               >
-                SHOW FILTER
+                {showFilter ? "Hide Filter" : "Show Filter"}
               </Typography>
             </Box>
           </Grid>
@@ -110,15 +131,37 @@ const Home = () => {
       </Container>
       <Container maxWidth="xl" sx={{ py: 5 }}>
         <Grid container spacing={2}>
-          <Grid item xl={3}>
-            <Grid item xl={12} lg={12} md={12} xs={12}>
-              <Box sx={{ border: "1px solid red" }}></Box>
-            </Grid>
+          <Grid
+            item
+            xl={gridItemSize}
+            md={4}
+            sm={4}
+            xs={12}
+            sx={{
+              transition: `transform ${transitionDuration}ms`,
+              transform: showFilter ? "translateX(0)" : "translateX(-100%)",
+              overflow: "hidden",
+              position: "relative",
+              [theme.breakpoints.down("xs")]: { 
+                display: showFilter ? 'none' : 'hide', 
+                transform: showFilter ? "translateX(0)" : "translateX(-100%)",                position: "absolute",
+                left: 0,
+                right: 0,
+                background: "white",
+                zIndex: 1,
+              },
+            }}
+          >
+            {showFilter && (
+              <Grid item xl={12} lg={12} md={12} xs={12}>
+                <AsiderSection />
+              </Grid>
+            )}
           </Grid>
-          <Grid item xs={9}>
-            <Grid container>
+          <Grid item xl={showFilter ? 9 : 12} md={ showFilter ? 8 : 12} sm={showFilter ? 8 : 12} xs={12}>
+            <Grid container spacing={2}>
               {products.map((item) => (
-                <Grid item xl={4} lg={3} md={4} xs={6}>
+                <Grid item xl={showFilter ? 4 : 3} lg={showFilter ? 4 : 3} md={showFilter ? 6 : 4} sm={6} xs={6}>
                   <ProductCard key={item.id} product={item} />
                 </Grid>
               ))}

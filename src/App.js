@@ -1,17 +1,24 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Home from "./Page/Home";
+import Navbar from "./components/Navbar/Navbar";
+export const theme = createTheme({
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
-import Home from './Page/Home';
-import Navbar from './components/Navbar/Navbar';
-
+  typography: {
+    fontFamily: ["Simplon Norm"].join(","),
+  },
+});
 function App() {
   return (
-    <BrowserRouter>
-    <Navbar/>
-    <Routes>
-      <Route path='/' element={<Home/>} />
-    </Routes>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
